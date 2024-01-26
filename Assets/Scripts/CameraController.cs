@@ -5,10 +5,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    float MouseSensitivity = 100;
+    float MouseSensitivity = 10;
     Transform playerBody;
 
     float xRotation;
+
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class CameraController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseX;
+        xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90, 80);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);

@@ -9,17 +9,12 @@ public class PlayerController : MonoBehaviour
 
     CharacterController characterController;
 
-    private void Awake()
+
+    void Start()
     {
         characterController = GetComponent<CharacterController>();
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         PlayerMove();
@@ -30,7 +25,7 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = transform.right * Speed + transform.forward * z;
+        Vector3 move = transform.right * x + transform.forward * z;
         characterController.Move(move * Speed * Time.deltaTime);
     }
 }
