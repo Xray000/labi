@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        startSpeed = Speed;
     }
 
     void Update()
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
-        RaycastHit hit; // elementy wykryte przez raycast
+        RaycastHit hit; // wszystkie uderzone elementy wykryte przez raycast
 
         if (Physics.Raycast(groundCheck.position, transform.TransformDirection(Vector3.down), out hit, 1f, groundMask))
         {

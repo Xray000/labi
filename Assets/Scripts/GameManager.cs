@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     bool endGame = false;
     bool win = false;
 
+
     void Start()
     {
         if (Instance == null)
@@ -21,12 +22,11 @@ public class GameManager : MonoBehaviour
         }
 
         if (timeToEnd <= 0)
-            timeToEnd = 120;
+            timeToEnd = 100;
 
         InvokeRepeating(nameof(Stopper), 2, 1);
     }
 
-    // Update is called once per frame
     void Update()
     {
         PauseCheck();
@@ -37,13 +37,13 @@ public class GameManager : MonoBehaviour
         timeToEnd--;
         print("Time: " + timeToEnd + "s");
 
-        if(timeToEnd <= 0)
+        if (timeToEnd <= 0)
         {
             timeToEnd = 0;
             endGame = true;
         }
 
-        if(endGame)
+        if (endGame)
             EndGame();
     }
 
@@ -53,17 +53,17 @@ public class GameManager : MonoBehaviour
 
         if (win)
         {
-            print("WIN");
+            print("WON !!!!");
         }
         else
         {
-            print("FAIL");
+            print("FAIL :(");
         }
     }
 
     void PauseCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (gamePaused == true)
                 ResumeGame();
@@ -74,14 +74,14 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        print("Pause Game");
+        Debug.Log("Pause game");
         Time.timeScale = 0;
         gamePaused = true;
     }
 
     public void ResumeGame()
     {
-        print("Resume Game");
+        Debug.Log("Resume game");
         Time.timeScale = 1;
         gamePaused = false;
     }
