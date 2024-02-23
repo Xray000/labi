@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundMask;
 
+    public float JumpPower = 10;
+    private Vector3 playerVelocity;
+
+
 
     void Start()
     {
@@ -29,7 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit; // wszystkie uderzone elementy wykryte przez raycast
 
-        if (Physics.Raycast(groundCheck.position, transform.TransformDirection(Vector3.down), out hit, 1f, groundMask))
+        if (Physics.Raycast(groundCheck.position, transform.TransformDirection(Vector3.down), out hit, 0.5f, groundMask))
         {
             switch (hit.collider.gameObject.tag)
             {
@@ -49,13 +53,20 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        playerVelocity += Physics.gravity * Time.deltaTime * 2;
+
+        Vector3 move = hit.collider != null
+            ? (transform.right * x + transform.forward * z + transform.up * playerVelocity.y)
+            : transform.up * playerVelocity.y;
+
+        playerVelocity.y = Input.GetKeyDown(KeyCode.Space) && hit.collider != null ? JumpPower : 0;
+
         characterController.Move(move * Speed * Time.deltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(hit.gameObject.tag == "PickUp")
+        if (hit.gameObject.tag == "Pickup")
         {
             hit.gameObject.GetComponent<PickUp>().Picked();
         }
